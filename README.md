@@ -5,6 +5,9 @@ LOLCatter: A useless, fun Android app (API 16 / v4.1 / JellyBean required) creat
 
 ![LauncherIcon](app/src/main/res/mipmap-xxhdpi/ic_launcher.png)
 
+### Download prebuilt APK
+https://www.dropbox.com/s/k4hch8z5g0vwsfj/lolcatter-debug.apk.zip?dl=0
+
 ### Basic usage:
 * Upon loading, the app will grab some of the most recent Flickr posts tagged "lolcat" and display one randomly with a title.
  
