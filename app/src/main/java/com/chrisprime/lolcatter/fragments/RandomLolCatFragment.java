@@ -16,7 +16,7 @@ import com.chrisprime.lolcatter.R;
 import com.chrisprime.lolcatter.async.DownloadFlickrFeedAsyncTask;
 import com.chrisprime.lolcatter.async.DownloadFlickrImageAsyncTask;
 import com.chrisprime.lolcatter.listeners.OnFlickrDataReceivedListener;
-import com.chrisprime.lolcatter.listeners.OnRefreshFeedListener;
+import com.chrisprime.lolcatter.listeners.RandomLolCatFragmentUpdateInterface;
 import com.chrisprime.lolcatter.netclasses.FlickrFeedItem;
 import com.chrisprime.lolcatter.utilities.Log;
 import com.chrisprime.lolcatter.utilities.RandomUtilities;
@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class RandomLolCatFragment extends Fragment
         implements OnFlickrDataReceivedListener,
-        OnRefreshFeedListener {
+        RandomLolCatFragmentUpdateInterface {
     private static final String LOG_TAG = RandomLolCatFragment.class.getSimpleName();
 
     private ImageView randomLolCatImageView;
@@ -73,13 +73,15 @@ public class RandomLolCatFragment extends Fragment
         return rootView;
     }
 
-    private void refreshFlickrFeed() {
+    @Override
+    public void refreshFlickrFeed() {
         randomLolCatProgressBar.setVisibility(View.VISIBLE);
         DownloadFlickrFeedAsyncTask downloadFlickrFeedAsyncTask = new DownloadFlickrFeedAsyncTask(this);
         downloadFlickrFeedAsyncTask.execute(getActivity().getString(R.string.flickr_feed_download_url));
     }
 
-    private void updateRandomLolCat() {
+    @Override
+    public void updateRandomLolCat() {
         if (flickrFeedItemList != null && flickrFeedItemList.size() > 0)
         {
             //show loading spinner to indicate activity
@@ -123,10 +125,5 @@ public class RandomLolCatFragment extends Fragment
     @Override
     public void onFlickrImageReceived(Bitmap flickrImageBitmap) {
         randomLolCatProgressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onRefreshFeedButtonTapped() {
-        refreshFlickrFeed();
     }
 }
