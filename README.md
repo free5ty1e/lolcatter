@@ -8,6 +8,8 @@ LOLCatter: A useless, fun Android app (API 16 / v4.1 / JellyBean required) creat
  
 * Tapping on the image will load another random lolcat from the current Flickr feed in memory.
 
+* When a new lolcat is requested, the old lolcat image will animate down to the bottom and off the screen, and the new one will animate down from the top and onto the screen.
+
 * Tapping on the title will launch the default web browser with the current lolcat Flickr post to view in all its original Flickr glory.
 
 * Shaking the phone will now load another random lolcat from the current Flickr feed in memory, and also will play the default camera shutter sound for user feedback.  The shake detector will ignore input for 750ms after user shake is detected to prevent continual shake detections.
@@ -18,7 +20,7 @@ LOLCatter: A useless, fun Android app (API 16 / v4.1 / JellyBean required) creat
 
 * Tapping on the Preferences icon will bring up a preferences screen, where the user can change the base Flickr feed URL and search tag to their heart's desire.  Can also enable / disable shake detection here.
 
-* Long-pressing the image will result in toggling visibility of the title textbox, for an unobscured view
+* Long-pressing the image will result in toggling visibility of the title textbox, for an unobscured view.  This sticks until the user long-presses a lolcat image again.
 
 * Current in-memory Flickr feed count and current image index are displayed to the left of the title, (02/15) for example for lolcat #2 out of 15 in the current feed
 
@@ -26,7 +28,6 @@ LOLCatter: A useless, fun Android app (API 16 / v4.1 / JellyBean required) creat
 
 
 ### TO DO:
-* Add animations in from bottom and out from top for random lolcat images and titles
 * Swipe gestures up and down will actually navigate to next and previous lolcat items in the feed (NOT random, in order)
 
 
