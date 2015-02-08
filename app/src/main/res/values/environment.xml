@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="flickr_feed_download_url"><![CDATA[http://api.flickr.com/services/feeds/photos_public.gne?tags=lolcat&format=json]]></string>
-</resources>

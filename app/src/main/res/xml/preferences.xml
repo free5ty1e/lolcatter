@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/pref_category_title_flickr_settings">
+
+        <EditTextPreference
+            android:defaultValue="@string/pref_default_value_flickr_feed_base_url"
+            android:key="@string/pref_key_flickr_feed_base_url"
+            android:summary="@string/pref_summary_flickr_feed_base_url"
+            android:title="@string/pref_title_flickr_feed_base_url" />
+
+        <EditTextPreference
+            android:defaultValue="@string/pref_default_value_flickr_feed_search_tag"
+            android:key="@string/pref_key_flickr_feed_search_tag"
+            android:summary="@string/pref_summary_flickr_feed_search_tag"
+            android:title="@string/pref_title_flickr_feed_search_tag" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_category_title_features">
+
+        <CheckBoxPreference
+            android:defaultValue="@bool/pref_default_value_shake_detection_enabled"
+            android:key="@string/pref_key_shake_detection_enabled"
+            android:summary="@string/pref_summary_shake_detection_enabled"
+            android:title="@string/pref_title_shake_detection_enabled" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
