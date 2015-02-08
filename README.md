@@ -19,5 +19,10 @@ LOLCatter: A useless, fun Android app (API 16 / v4.1 / JellyBean required) creat
 * Tapping on the Preferences icon will bring up a preferences screen, where the user can change the base Flickr feed URL and search tag to their heart's desire.  Can also enable / disable shake detection here.
 
 ### TO DO:
-  
+* Initially hide the empty text box so it can animate in and not look odd during startup
+* Long-pressing the image will result in toggling visibility of the title textbox, for an unobscured view
+* Add animations in from bottom and out from top for random lolcat images and titles
+* Current in-memory Flickr feed count and current image index are displayed to the left of the title, (02/15) for example for lolcat #2 out of 15 in the current feed
+* Swipe gestures up and down will actually navigate to next and previous lolcat items in the feed (NOT random, in order)
+* Basic Android unit tests to validate operation of utility methods
   
