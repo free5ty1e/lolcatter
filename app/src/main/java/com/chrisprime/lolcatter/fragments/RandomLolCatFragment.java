@@ -16,6 +16,7 @@ import com.chrisprime.lolcatter.R;
 import com.chrisprime.lolcatter.async.DownloadFlickrFeedAsyncTask;
 import com.chrisprime.lolcatter.async.DownloadFlickrImageAsyncTask;
 import com.chrisprime.lolcatter.listeners.OnFlickrDataReceivedListener;
+import com.chrisprime.lolcatter.listeners.OnRefreshFeedListener;
 import com.chrisprime.lolcatter.netclasses.FlickrFeedItem;
 import com.chrisprime.lolcatter.utilities.Log;
 import com.chrisprime.lolcatter.utilities.RandomUtilities;
@@ -26,7 +27,8 @@ import java.util.List;
  * Created by cpaian on 2/7/15.
  */
 public class RandomLolCatFragment extends Fragment
-        implements OnFlickrDataReceivedListener {
+        implements OnFlickrDataReceivedListener,
+        OnRefreshFeedListener {
     private static final String LOG_TAG = RandomLolCatFragment.class.getSimpleName();
 
     private ImageView randomLolCatImageView;
@@ -123,4 +125,8 @@ public class RandomLolCatFragment extends Fragment
         randomLolCatProgressBar.setVisibility(View.GONE);
     }
 
+    @Override
+    public void onRefreshFeedButtonTapped() {
+        refreshFlickrFeed();
+    }
 }

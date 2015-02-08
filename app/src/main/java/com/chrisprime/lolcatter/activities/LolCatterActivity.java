@@ -1,5 +1,6 @@
 package com.chrisprime.lolcatter.activities;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 
@@ -8,6 +9,7 @@ import android.view.MenuItem;
 
 import com.chrisprime.lolcatter.R;
 import com.chrisprime.lolcatter.fragments.RandomLolCatFragment;
+import com.chrisprime.lolcatter.listeners.OnRefreshFeedListener;
 import com.chrisprime.lolcatter.utilities.Log;
 
 /**
@@ -15,13 +17,15 @@ import com.chrisprime.lolcatter.utilities.Log;
  */
 public class LolCatterActivity extends ActionBarActivity {
 private static final String LOG_TAG = LolCatterActivity.class.getSimpleName();
+    private Fragment mainFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lol_catter);
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction().add(R.id.container, new RandomLolCatFragment()).commit();
+            mainFragment = new RandomLolCatFragment();
+            getFragmentManager().beginTransaction().add(R.id.container, mainFragment).commit();
         }
     }
 
@@ -47,6 +51,10 @@ private static final String LOG_TAG = LolCatterActivity.class.getSimpleName();
                 break;
             case R.id.action_refresh:
                 Log.v(LOG_TAG, ".onOptionsItemSelected(): Refresh Feed item selected.");
+                if (mainFragment != null && mainFragment instanceof OnRefreshFeedListener)
+                {
+                    ((OnRefreshFeedListener) mainFragment).onRefreshFeedButtonTapped();
+                }
                 ret = true;
                 break;
             default:
