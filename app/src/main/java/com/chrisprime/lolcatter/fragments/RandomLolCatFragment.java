@@ -58,7 +58,7 @@ public class RandomLolCatFragment extends Fragment
     }
 
     @Override
-    public void onFlickrFeedDataReceived(List<FlickrFeedItem> flickrFeedResponseString) {
+    public void onFlickrFeedDataReceived(List<FlickrFeedItem> flickrFeedItemList) {
 
     }
 
