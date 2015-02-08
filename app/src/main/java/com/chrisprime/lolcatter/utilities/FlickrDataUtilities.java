@@ -40,12 +40,12 @@ public class FlickrDataUtilities {
             for (int i = 0; i < length; i++) {
                 JSONObject row = jsonItemsList.getJSONObject(i);
                 FlickrFeedItem flickrFeedItem = new FlickrFeedItem();
-                flickrFeedItem.title = row.getString("title");
-                flickrFeedItem.linkUrl = row.getString("link");
-                flickrFeedItem.imageUrl = row.getJSONObject("media").getString("m");
+                flickrFeedItem.setTitle(row.getString("title"));
+                flickrFeedItem.setLinkUrl(row.getString("link"));
+                flickrFeedItem.setImageUrl(row.getJSONObject("media").getString("m"));
                 flickrFeedItemList.add(flickrFeedItem);
-                Log.d(LOG_TAG, "jsonItem found: " + flickrFeedItem.title + ", image: " + flickrFeedItem.linkUrl + ", link: "
-                        + flickrFeedItem.imageUrl);
+                Log.d(LOG_TAG, "jsonItem found: " + flickrFeedItem.getTitle()+ ", image: " + flickrFeedItem.getImageUrl() + ", link: "
+                        + flickrFeedItem.getLinkUrl());
             }
         } catch (JSONException e) {
             //Using SUUV log level as it handles strings longer than the logcat entry limit of 4k

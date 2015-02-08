@@ -1,19 +1,24 @@
 package com.chrisprime.lolcatter.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.chrisprime.lolcatter.R;
 import com.chrisprime.lolcatter.async.DownloadFlickrFeedAsyncTask;
+import com.chrisprime.lolcatter.async.DownloadFlickrImageAsyncTask;
 import com.chrisprime.lolcatter.listeners.OnFlickrDataReceivedListener;
 import com.chrisprime.lolcatter.netclasses.FlickrFeedItem;
 import com.chrisprime.lolcatter.utilities.Log;
+import com.chrisprime.lolcatter.utilities.RandomUtilities;
 
 import java.util.List;
 
@@ -26,6 +31,10 @@ public class RandomLolCatFragment extends Fragment
 
     private ImageView randomLolCatImageView;
     private TextView randomLolCatTitleTextView;
+    private ProgressBar randomLolCatProgressBar;
+    
+    private List<FlickrFeedItem> flickrFeedItemList;
+    private FlickrFeedItem currentFlickrFeedItem;
 
     public RandomLolCatFragment() {
     }
@@ -35,11 +44,13 @@ public class RandomLolCatFragment extends Fragment
         View rootView = inflater.inflate(R.layout.fragment_random_lolcat, container, false);
         randomLolCatImageView = (ImageView) rootView.findViewById(R.id.random_lolcat_imageview);
         randomLolCatTitleTextView = (TextView) rootView.findViewById(R.id.random_lolcat_title);
+        randomLolCatProgressBar = (ProgressBar) rootView.findViewById(R.id.random_lolcat_progressbar);
 
         randomLolCatImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(LOG_TAG, ".onClick() for randomLolCatImageView");
+                updateRandomLolCat();
             }
         });
 
@@ -47,24 +58,49 @@ public class RandomLolCatFragment extends Fragment
             @Override
             public void onClick(View v) {
                 Log.d(LOG_TAG, ".onClick() for randomLolCatTitleTextView");
+                if (currentFlickrFeedItem != null)
+                {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(currentFlickrFeedItem.getLinkUrl()));
+                    startActivity(browserIntent);
+                }
             }
         });
 
-        DownloadFlickrFeedAsyncTask downloadFlickrFeedAsyncTask = new DownloadFlickrFeedAsyncTask(this);
-        downloadFlickrFeedAsyncTask.execute("http://api.flickr.com/services/feeds/photos_public.gne?tags=lolcat&format=json");
-
-
+        refreshFlickrFeed();
         return rootView;
+    }
+
+    private void refreshFlickrFeed() {
+        randomLolCatProgressBar.setVisibility(View.VISIBLE);
+        DownloadFlickrFeedAsyncTask downloadFlickrFeedAsyncTask = new DownloadFlickrFeedAsyncTask(this);
+        downloadFlickrFeedAsyncTask.execute(getActivity().getString(R.string.flickr_feed_download_url));
+    }
+
+    private void updateRandomLolCat() {
+        if (flickrFeedItemList != null && flickrFeedItemList.size() > 0)
+        {
+            int randomlySelectedFlickrFeedItemIndex = RandomUtilities.randomIntBetween(0, flickrFeedItemList.size() - 1);
+            currentFlickrFeedItem = flickrFeedItemList.get(randomlySelectedFlickrFeedItemIndex);
+
+            //Update title immediately so the user can see what is being loaded
+            randomLolCatTitleTextView.setText(currentFlickrFeedItem.getTitle());
+
+            //Start background download of image, also show loading spinner to indicate activity
+            randomLolCatProgressBar.setVisibility(View.VISIBLE);
+            DownloadFlickrImageAsyncTask downloadFlickrImageAsyncTask = new DownloadFlickrImageAsyncTask(this, randomLolCatImageView);
+            downloadFlickrImageAsyncTask.execute(currentFlickrFeedItem.getImageUrl());
+        }
     }
 
     @Override
     public void onFlickrFeedDataReceived(List<FlickrFeedItem> flickrFeedItemList) {
-
+        this.flickrFeedItemList = flickrFeedItemList;
+        updateRandomLolCat();
     }
 
     @Override
     public void onFlickrImageReceived(Bitmap flickrImageBitmap) {
-
+        randomLolCatProgressBar.setVisibility(View.GONE);
     }
 
 }

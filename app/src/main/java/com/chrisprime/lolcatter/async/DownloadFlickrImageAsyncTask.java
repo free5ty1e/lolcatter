@@ -24,7 +24,7 @@ public class DownloadFlickrImageAsyncTask extends AsyncTask<String, Void, Bitmap
     ImageView bmImage;
     OnFlickrDataReceivedListener onFlickrDataReceivedListener;
 
-    public DownloadFlickrImageAsyncTask(ImageView bmImage, OnFlickrDataReceivedListener onFlickrDataReceivedListener) {
+    public DownloadFlickrImageAsyncTask(OnFlickrDataReceivedListener onFlickrDataReceivedListener, ImageView bmImage) {
         this.bmImage = bmImage;
         this.onFlickrDataReceivedListener = onFlickrDataReceivedListener;
     }
