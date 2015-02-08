@@ -3,8 +3,8 @@ package com.chrisprime.lolcatter.async;
 import android.os.AsyncTask;
 
 
+import com.chrisprime.lolcatter.interfaces.RandomLolCatFragmentInterface;
 import com.chrisprime.lolcatter.netclasses.FlickrFeedItem;
-import com.chrisprime.lolcatter.listeners.OnFlickrDataReceivedListener;
 import com.chrisprime.lolcatter.utilities.FlickrDataUtilities;
 import com.chrisprime.lolcatter.utilities.Log;
 
@@ -23,10 +23,10 @@ import java.util.List;
  */
 public class DownloadFlickrFeedAsyncTask extends AsyncTask<String, Void, List<FlickrFeedItem>> {
     private static final String LOG_TAG = DownloadFlickrFeedAsyncTask.class.getSimpleName();
-    OnFlickrDataReceivedListener onFlickrDataReceivedListener;
+    RandomLolCatFragmentInterface randomLolCatFragmentInterface;
 
-    public DownloadFlickrFeedAsyncTask(OnFlickrDataReceivedListener onFlickrDataReceivedListener) {
-        this.onFlickrDataReceivedListener = onFlickrDataReceivedListener;
+    public DownloadFlickrFeedAsyncTask(RandomLolCatFragmentInterface randomLolCatFragmentInterface) {
+        this.randomLolCatFragmentInterface = randomLolCatFragmentInterface;
     }
 
     protected List<FlickrFeedItem> doInBackground(String... urls) {
@@ -61,7 +61,7 @@ public class DownloadFlickrFeedAsyncTask extends AsyncTask<String, Void, List<Fl
     }
 
     protected void onPostExecute(List<FlickrFeedItem> flickrFeedItemList) {
-        onFlickrDataReceivedListener.onFlickrFeedDataReceived(flickrFeedItemList);
+        randomLolCatFragmentInterface.onFlickrFeedDataReceived(flickrFeedItemList);
     }
 
 }

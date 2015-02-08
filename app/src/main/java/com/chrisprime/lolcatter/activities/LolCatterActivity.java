@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import com.chrisprime.lolcatter.R;
 import com.chrisprime.lolcatter.fragments.RandomLolCatFragment;
 import com.chrisprime.lolcatter.fragments.SettingsFragment;
-import com.chrisprime.lolcatter.listeners.RandomLolCatFragmentUpdateInterface;
+import com.chrisprime.lolcatter.interfaces.RandomLolCatFragmentInterface;
 import com.chrisprime.lolcatter.utilities.Log;
 import com.chrisprime.lolcatter.utilities.PreferenceUtilities;
 import com.chrisprime.lolcatter.utilities.ShakeDetector;
@@ -81,8 +81,8 @@ public class LolCatterActivity extends ActionBarActivity
                 break;
             case R.id.action_refresh:
                 Log.v(LOG_TAG, ".onOptionsItemSelected(): Refresh Feed item selected.");
-                if (mainFragment != null && mainFragment instanceof RandomLolCatFragmentUpdateInterface) {
-                    ((RandomLolCatFragmentUpdateInterface) mainFragment).refreshFlickrFeed();
+                if (mainFragment != null && mainFragment instanceof RandomLolCatFragmentInterface) {
+                    ((RandomLolCatFragmentInterface) mainFragment).refreshFlickrFeed();
                 }
                 ret = true;
                 break;
@@ -104,9 +104,9 @@ public class LolCatterActivity extends ActionBarActivity
     @Override
     public void onShake() {
         if (PreferenceUtilities.isShakeDetectionEnabled()) {
-            if (mainFragment != null && mainFragment instanceof RandomLolCatFragmentUpdateInterface) {
+            if (mainFragment != null && mainFragment instanceof RandomLolCatFragmentInterface) {
                 SoundPlayer.getInstance().playShutterSound(this);
-                ((RandomLolCatFragmentUpdateInterface) mainFragment).updateRandomLolCat();
+                ((RandomLolCatFragmentInterface) mainFragment).updateRandomLolCat();
             }
         }
     }
