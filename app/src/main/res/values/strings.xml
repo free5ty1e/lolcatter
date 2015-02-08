@@ -1,5 +1,20 @@
 <resources>
     <string name="app_name">LOL Catter</string>
+
     <string name="action_settings">Settings</string>
     <string name="action_refresh">Refresh Flickr Feed</string>
+
+    <string name="pref_category_title_flickr_settings">Flickr Settings</string>
+
+    <string name="pref_title_flickr_feed_base_url">Flickr Base URL</string>
+    <string name="pref_summary_flickr_feed_base_url">Flickr Feed Base URL with query prefix</string>
+
+    <string name="pref_title_flickr_feed_search_tag">Flickr Search Tag</string>
+    <string name="pref_summary_flickr_feed_search_tag">Tag to search for (default: lolcat)</string>
+
+    <string name="pref_category_title_features">Features</string>
+
+    <string name="pref_title_shake_detection_enabled">Shake Detection</string>
+    <string name="pref_summary_shake_detection_enabled">Shaking the phone can also load a random lolcat, when enabled.</string>
+
 </resources>
