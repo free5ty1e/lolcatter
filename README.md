@@ -1,6 +1,8 @@
 # lolcatter
 LOLCatter: A useless, fun Android app (API 16 / v4.1 / JellyBean required) created for an interview tech challenge.  You will see LOLCats.  Because Internet.
 
+#### Built with Android Studio v1.1b4
+
 ![LauncherIcon](app/src/main/res/mipmap-xxhdpi/ic_launcher.png)
 
 ### Basic usage:
