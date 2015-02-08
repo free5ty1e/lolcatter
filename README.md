@@ -16,6 +16,4 @@ Landscape and portrait rotations are both supported, and switching between the t
 
 ### TO DO:
   * Tapping on the Preferences icon will bring up a preferences screen, where the user can change the base Flickr feed URL and query parameters to their heart's desire.
-  * Tapping on the Refresh icon will reload the Flickr feed from the web into memory, possibly resulting in a whole new set of LOLcats!
   * Shake phone for random LOLcat
-
