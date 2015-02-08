@@ -9,6 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * Created by cpaian on 2/7/15.
+ */
 public class LolCatterActivity extends ActionBarActivity {
 
     @Override
