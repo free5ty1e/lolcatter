@@ -12,6 +12,7 @@
         <activity
             android:name=".activities.LolCatterActivity"
             android:parentActivityName=".activities.LolCatterActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
