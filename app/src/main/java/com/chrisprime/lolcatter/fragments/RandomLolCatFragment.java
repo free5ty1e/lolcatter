@@ -120,14 +120,16 @@ public class RandomLolCatFragment extends Fragment
     }
 
     private void animateLolCatImageView(boolean animateIn) {
+        Log.suuv(LOG_TAG, ".animateLolCatImageView(" + animateIn + "), randomLolCatImageVisible = " + randomLolCatImageVisible);
         if (randomLolCatImageVisible != animateIn)
         {
+            Log.suuv(LOG_TAG, ".animateLolCatImageView() states different, animating!");
             ObjectAnimator objectAnimator = (ObjectAnimator) AnimatorInflater.loadAnimator(
                     getActivity(),
                     animateIn ? R.animator.slide_image_in_from_top : R.animator.slide_image_down_out_to_bottom);
             objectAnimator.setTarget(randomLolCatImageView);
             objectAnimator.start();
-            randomLolCatTitleVisible = animateIn;
+            randomLolCatImageVisible = animateIn;
         }
     }
 
