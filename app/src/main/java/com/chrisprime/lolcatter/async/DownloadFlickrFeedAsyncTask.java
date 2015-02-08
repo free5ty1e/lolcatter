@@ -5,18 +5,14 @@ import android.os.AsyncTask;
 
 import com.chrisprime.lolcatter.netclasses.FlickrFeedItem;
 import com.chrisprime.lolcatter.listeners.OnFlickrDataReceivedListener;
+import com.chrisprime.lolcatter.utilities.FlickrDataUtilities;
 import com.chrisprime.lolcatter.utilities.Log;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,7 +54,7 @@ public class DownloadFlickrFeedAsyncTask extends AsyncTask<String, Void, List<Fl
         if (Log.isLogLevelAtLeast(Log.LogLevel.SUPER_ULTRA_UBER_VERBOSE)) {
             Log.suuv(LOG_TAG, ".doInBackground(" + urlOfFeed + ") complete, results:\n" + responseString);
         }
-        List<FlickrFeedItem> flickrFeedItemList = extractFlickrFeedItemsFromResponseString(responseString);
+        List<FlickrFeedItem> flickrFeedItemList = FlickrDataUtilities.extractFlickrFeedItemsFromResponseString(responseString);
 
 
         return flickrFeedItemList;
@@ -68,52 +64,4 @@ public class DownloadFlickrFeedAsyncTask extends AsyncTask<String, Void, List<Fl
         onFlickrDataReceivedListener.onFlickrFeedDataReceived(flickrFeedItemList);
     }
 
-    public static List<FlickrFeedItem> extractFlickrFeedItemsFromResponseString(String responseString) {
-        //Parse and utilize the JSON object to initialize the pager adapters' fragments
-        List<FlickrFeedItem> flickrFeedItemList = null;
-        JSONObject jsonObject = null;
-        try
-        {
-            //Trim the nonstandard JSON components from the beginning and ending of the response,
-            // if any (with Flickr API, it is definitely not returning valid JSON until inside their nonstandard "jsonFlickrFeed(" tag)
-            responseString = trimNonJsonComponentsFromString(responseString);
-            jsonObject = new JSONObject(responseString);
-            if (Log.isLogLevelAtLeast(Log.LogLevel.SUPER_ULTRA_UBER_VERBOSE)) //Don't even construct the string unless we're logging it, for performance reasons
-            {
-                Log.suuv(LOG_TAG, ".onCreate(): jsonObject =\n" + jsonObject);
-            }
-
-            JSONArray jsonItemsList = jsonObject.getJSONArray("items");
-            if (Log.isLogLevelAtLeast(Log.LogLevel.SUPER_ULTRA_UBER_VERBOSE)) //Don't even construct the string unless we're logging it, for performance reasons
-            {
-                Log.suuv(LOG_TAG, ".onCreate(): jsonItemsList =\n" + jsonItemsList);
-            }
-
-            flickrFeedItemList = new ArrayList<>();
-            int length = jsonItemsList.length();
-            for (int i = 0; i < length; i++)
-            {
-                JSONObject row = jsonItemsList.getJSONObject(i);
-                FlickrFeedItem flickrFeedItem = new FlickrFeedItem();
-                flickrFeedItem.title = row.getString("title");
-                flickrFeedItem.linkUrl = row.getString("link");
-                flickrFeedItem.imageUrl = row.getJSONObject("media").getString("m");
-                flickrFeedItemList.add(flickrFeedItem);
-                Log.d(LOG_TAG, "jsonItem found: " + flickrFeedItem.title + ", image: " + flickrFeedItem.linkUrl + ", link: "
-                        + flickrFeedItem.imageUrl);
-            }
-        }
-        catch (JSONException e)
-        {
-            //Using SUUV log level as it handles strings longer than the logcat entry limit of 4k
-            Log.suuv(LOG_TAG, ".onCreate JSONException from jsonObject creation: " + e.getMessage(), e);
-        }
-        return flickrFeedItemList;
-    }
-
-    public static String trimNonJsonComponentsFromString(String jsonString)
-    {
-        jsonString = jsonString.substring(jsonString.indexOf("{"), jsonString.lastIndexOf("}") + 1);
-        return jsonString;
-    }
 }
