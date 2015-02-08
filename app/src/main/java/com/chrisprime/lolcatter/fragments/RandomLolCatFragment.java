@@ -45,6 +45,8 @@ public class RandomLolCatFragment extends Fragment
     private boolean randomLolCatImageVisible = false;
     private boolean lolcatImageAnimating = false;
 
+    private boolean userSetTitleVisibility = true;
+
     public RandomLolCatFragment() {
     }
 
@@ -103,7 +105,6 @@ public class RandomLolCatFragment extends Fragment
             randomLolCatProgressBar.setVisibility(View.VISIBLE);
 
             animateLolCatImageView(false);
-            animateLolCatTitle(false);
 
             nextDifferentRandomFlickrFeedIndex();
 
@@ -155,10 +156,6 @@ public class RandomLolCatFragment extends Fragment
         }
     }
 
-    private void animateLolCatTitle(boolean animateIn) {
-
-    }
-
     private void nextDifferentRandomFlickrFeedIndex() {
         int previousRandomIndex = randomlySelectedFlickrFeedItemIndex;
         setNextRandomFlickrFeedIndex();
@@ -186,7 +183,7 @@ public class RandomLolCatFragment extends Fragment
         randomLolCatImageView.setImageBitmap(flickrImageBitmap);
         randomLolCatProgressBar.setVisibility(View.GONE);
         animateLolCatImageView(true);
-        lolcatTitleVisible(true);
+        lolcatTitleVisible(userSetTitleVisibility);
     }
 
     private void lolcatTitleVisible(boolean visible) {
@@ -195,6 +192,7 @@ public class RandomLolCatFragment extends Fragment
     }
 
     private void toggleTitleVisibility() {
+        userSetTitleVisibility = !userSetTitleVisibility;
         lolcatTitleVisible(!randomLolCatTitleVisible);
     }
 
