@@ -29,6 +29,7 @@
         android:textSize="@dimen/random_lolcat_title_text_size"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/random_lolcat_title_margin_bottom"
         android:padding="@dimen/abc_action_bar_default_padding_material" />
 
 </RelativeLayout>

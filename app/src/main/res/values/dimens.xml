@@ -3,4 +3,5 @@
     <dimen name="fragment_random_lolcat_horizontal_margin">0dp</dimen>
     <dimen name="fragment_random_lolcat_vertical_margin">0dp</dimen>
     <dimen name="random_lolcat_title_text_size">24sp</dimen>
+    <dimen name="random_lolcat_title_margin_bottom">25dp</dimen>
 </resources>
