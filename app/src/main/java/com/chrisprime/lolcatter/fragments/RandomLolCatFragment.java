@@ -35,6 +35,7 @@ public class RandomLolCatFragment extends Fragment
     
     private List<FlickrFeedItem> flickrFeedItemList;
     private FlickrFeedItem currentFlickrFeedItem;
+    private int randomlySelectedFlickrFeedItemIndex;
 
     public RandomLolCatFragment() {
     }
@@ -79,17 +80,36 @@ public class RandomLolCatFragment extends Fragment
     private void updateRandomLolCat() {
         if (flickrFeedItemList != null && flickrFeedItemList.size() > 0)
         {
-            int randomlySelectedFlickrFeedItemIndex = RandomUtilities.randomIntBetween(0, flickrFeedItemList.size() - 1);
+            //show loading spinner to indicate activity
+            randomLolCatProgressBar.setVisibility(View.VISIBLE);
+
+            nextDifferentRandomFlickrFeedIndex();
+
             currentFlickrFeedItem = flickrFeedItemList.get(randomlySelectedFlickrFeedItemIndex);
 
             //Update title immediately so the user can see what is being loaded
             randomLolCatTitleTextView.setText(currentFlickrFeedItem.getTitle());
 
-            //Start background download of image, also show loading spinner to indicate activity
-            randomLolCatProgressBar.setVisibility(View.VISIBLE);
+            //Start background download of image
             DownloadFlickrImageAsyncTask downloadFlickrImageAsyncTask = new DownloadFlickrImageAsyncTask(this, randomLolCatImageView);
             downloadFlickrImageAsyncTask.execute(currentFlickrFeedItem.getImageUrl());
         }
+    }
+
+    private void nextDifferentRandomFlickrFeedIndex() {
+        int previousRandomIndex = randomlySelectedFlickrFeedItemIndex;
+        setNextRandomFlickrFeedIndex();
+        if (flickrFeedItemList.size() > 1)  //If more than one image was returned, we should ensure we don't end up with the same random image as last time
+        {
+            while(randomlySelectedFlickrFeedItemIndex == previousRandomIndex)
+            {
+                setNextRandomFlickrFeedIndex();
+            }
+        }
+    }
+
+    private void setNextRandomFlickrFeedIndex() {
+        randomlySelectedFlickrFeedItemIndex = RandomUtilities.randomIntBetween(0, flickrFeedItemList.size() - 1);
     }
 
     @Override
