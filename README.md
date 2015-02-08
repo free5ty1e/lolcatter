@@ -22,9 +22,11 @@ LOLCatter: A useless, fun Android app (API 16 / v4.1 / JellyBean required) creat
 
 * Current in-memory Flickr feed count and current image index are displayed to the left of the title, (02/15) for example for lolcat #2 out of 15 in the current feed
 
+* Includes Basic Android unit tests to validate operation of utility methods
+
 
 ### TO DO:
 * Add animations in from bottom and out from top for random lolcat images and titles
 * Swipe gestures up and down will actually navigate to next and previous lolcat items in the feed (NOT random, in order)
-* Basic Android unit tests to validate operation of utility methods
+
 
