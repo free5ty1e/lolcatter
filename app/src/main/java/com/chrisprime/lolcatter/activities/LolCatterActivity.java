@@ -1,25 +1,27 @@
-package com.chrisprime.lolcatter;
+package com.chrisprime.lolcatter.activities;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
+
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+
+import com.chrisprime.lolcatter.R;
+import com.chrisprime.lolcatter.fragments.RandomLolCatFragment;
+import com.chrisprime.lolcatter.utilities.Log;
 
 /**
  * Created by cpaian on 2/7/15.
  */
 public class LolCatterActivity extends ActionBarActivity {
+private static final String LOG_TAG = LolCatterActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lol_catter);
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment()).commit();
+            getFragmentManager().beginTransaction().add(R.id.container, new RandomLolCatFragment()).commit();
         }
     }
 
@@ -35,28 +37,22 @@ public class LolCatterActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        boolean ret;
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                Log.v(LOG_TAG, ".onOptionsItemSelected(): Settings item selected.");
+                ret = true;
+                break;
+            case R.id.action_refresh:
+                Log.v(LOG_TAG, ".onOptionsItemSelected(): Refresh Feed item selected.");
+                ret = true;
+                break;
+            default:
+                ret = super.onOptionsItemSelected(item);
+                break;
         }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_lol_catter, container, false);
-            return rootView;
-        }
+        return ret;
     }
 }
