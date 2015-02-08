@@ -104,7 +104,8 @@ public class RandomLolCatFragment extends Fragment
             currentFlickrFeedItem = flickrFeedItemList.get(randomlySelectedFlickrFeedItemIndex);
 
             //Update title immediately so the user can see what is being loaded
-            randomLolCatTitleTextView.setText(currentFlickrFeedItem.getTitle());
+            randomLolCatTitleTextView.setText("(" + (randomlySelectedFlickrFeedItemIndex + 1)
+                    + "/" + flickrFeedItemList.size() + "): " + currentFlickrFeedItem.getTitle());
 
             //Start background download of image
             DownloadFlickrImageAsyncTask downloadFlickrImageAsyncTask = new DownloadFlickrImageAsyncTask(this, randomLolCatImageView);

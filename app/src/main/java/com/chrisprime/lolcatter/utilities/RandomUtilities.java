@@ -6,6 +6,7 @@ import java.util.Random;
  * Created by cpaian on 2/7/15.
  */
 public class RandomUtilities {
+    private static final String LOG_TAG = RandomUtilities.class.getSimpleName();
     private static final Random random = new Random();
 
     /**
@@ -19,12 +20,10 @@ public class RandomUtilities {
      * @see java.util.Random#nextInt(int)
      */
     public static int randomIntBetween(int min, int max) {
-
-        // NOTE: Usually this should be a field rather than a method
-        // variable so that it is not re-seeded every call.
-
         // nextInt is normally exclusive of the top value,
         // so add 1 to make it inclusive
-        return random.nextInt((max - min) + 1) + min;
+        int randomInt = random.nextInt((max - min) + 1) + min;
+        Log.suuv(LOG_TAG, ".randomIntBetween(" + min + ", " + max + ") = " + randomInt);
+        return randomInt;
     }
 }
