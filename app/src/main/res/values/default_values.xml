@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="pref_default_value_flickr_feed_base_url"><![CDATA[http://api.flickr.com/services/feeds/photos_public.gne?format=json&amp;tags=]]></string>
+    <string name="pref_default_value_flickr_feed_base_url"><![CDATA[http://api.flickr.com/services/feeds/photos_public.gne?format=json&tags=]]></string>
     <string name="pref_default_value_flickr_feed_search_tag">lolcat</string>
     <bool name="pref_default_value_shake_detection_enabled">true</bool>
 </resources>
