@@ -42,10 +42,10 @@ public class ShakeDetector {
     }
 
     private final SensorEventListener mSensorListener = new SensorEventListener() {
-        public void onSensorChanged(SensorEvent se) {
-            float x = se.values[0];
-            float y = se.values[1];
-            float z = se.values[2];
+        public void onSensorChanged(SensorEvent sensorEvent) {
+            float x = sensorEvent.values[0];
+            float y = sensorEvent.values[1];
+            float z = sensorEvent.values[2];
             mAccelLast = mAccelCurrent;
             mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
             float delta = mAccelCurrent - mAccelLast;
