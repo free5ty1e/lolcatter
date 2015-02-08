@@ -26,6 +26,8 @@
         android:layout_height="wrap_content"
         android:background="@color/random_lolcat_title_background"
         android:textColor="@color/random_lolcat_title_text"
+        android:visibility="gone"
+        android:maxLines="5"
         android:textSize="@dimen/random_lolcat_title_text_size"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

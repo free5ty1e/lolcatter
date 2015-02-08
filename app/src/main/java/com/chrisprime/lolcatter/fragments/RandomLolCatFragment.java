@@ -126,5 +126,15 @@ public class RandomLolCatFragment extends Fragment
     @Override
     public void onFlickrImageReceived(Bitmap flickrImageBitmap) {
         randomLolCatProgressBar.setVisibility(View.GONE);
+        showLolcatTitle();
     }
+
+    private void showLolcatTitle() {
+        randomLolCatTitleTextView.setVisibility(View.VISIBLE);
+    }
+
+    private void hideLolcatTitle() {
+        randomLolCatTitleTextView.setVisibility(View.GONE);
+    }
+
 }
