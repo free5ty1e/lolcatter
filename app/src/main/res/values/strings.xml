@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">LOL Catter</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_refresh">Refresh Flickr Feed</string>
 </resources>
