@@ -3,8 +3,8 @@ package com.chrisprime.lolcatter.activities;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -21,8 +21,8 @@ import com.chrisprime.lolcatter.utilities.SoundPlayer;
  * Created by cpaian on 2/7/15.
  */
 public class LolCatterActivity extends ActionBarActivity
-    implements ShakeDetector.ShakeDetectorListener {
-private static final String LOG_TAG = LolCatterActivity.class.getSimpleName();
+        implements ShakeDetector.ShakeDetectorListener {
+    private static final String LOG_TAG = LolCatterActivity.class.getSimpleName();
     private Fragment mainFragment;
     private ShakeDetector shakeDetector;
 
@@ -30,6 +30,15 @@ private static final String LOG_TAG = LolCatterActivity.class.getSimpleName();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lol_catter);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE | ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_CUSTOM);
+            actionBar.setIcon(R.mipmap.ic_launcher);
+        }
+        else
+        {
+            Log.d(LOG_TAG, ".onCreate(): actionBar is null!");
+        }
         shakeDetector = new ShakeDetector(this);
         shakeDetector.setShakeListener(this);
 
@@ -42,9 +51,11 @@ private static final String LOG_TAG = LolCatterActivity.class.getSimpleName();
         mainFragment = fragment;
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction().replace(R.id.container, mainFragment, mainFragment.getClass().getSimpleName());
         if (addToBackstack) {
-            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.addToBackStack(null).commit();
         }
-        fragmentTransaction.commit();
+        else {
+            fragmentTransaction.commit();
+        }
     }
 
     @Override
@@ -70,8 +81,7 @@ private static final String LOG_TAG = LolCatterActivity.class.getSimpleName();
                 break;
             case R.id.action_refresh:
                 Log.v(LOG_TAG, ".onOptionsItemSelected(): Refresh Feed item selected.");
-                if (mainFragment != null && mainFragment instanceof RandomLolCatFragmentUpdateInterface)
-                {
+                if (mainFragment != null && mainFragment instanceof RandomLolCatFragmentUpdateInterface) {
                     ((RandomLolCatFragmentUpdateInterface) mainFragment).refreshFlickrFeed();
                 }
                 ret = true;
@@ -84,11 +94,17 @@ private static final String LOG_TAG = LolCatterActivity.class.getSimpleName();
     }
 
     @Override
+    public void onBackPressed() {
+        if(getFragmentManager().getBackStackEntryCount() != 0) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+    @Override
     public void onShake() {
-        if (PreferenceUtilities.isShakeDetectionEnabled())
-        {
-            if (mainFragment != null && mainFragment instanceof RandomLolCatFragmentUpdateInterface)
-            {
+        if (PreferenceUtilities.isShakeDetectionEnabled()) {
+            if (mainFragment != null && mainFragment instanceof RandomLolCatFragmentUpdateInterface) {
                 SoundPlayer.getInstance().playShutterSound(this);
                 ((RandomLolCatFragmentUpdateInterface) mainFragment).updateRandomLolCat();
             }
@@ -96,15 +112,13 @@ private static final String LOG_TAG = LolCatterActivity.class.getSimpleName();
     }
 
     @Override
-    protected void onResume()
-    {
+    protected void onResume() {
         shakeDetector.resumeListener();
         super.onResume();
     }
 
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
         shakeDetector.pauseListener();
         super.onPause();
     }
