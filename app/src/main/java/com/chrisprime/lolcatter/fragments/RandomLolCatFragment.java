@@ -1,5 +1,7 @@
 package com.chrisprime.lolcatter.fragments;
 
+import android.animation.AnimatorInflater;
+import android.animation.ObjectAnimator;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -41,6 +43,7 @@ public class RandomLolCatFragment extends Fragment
     private int randomlySelectedFlickrFeedItemIndex;
 
     private boolean randomLolCatTitleVisible = false;
+    private boolean randomLolCatImageVisible = false;
 
     public RandomLolCatFragment() {
     }
@@ -99,6 +102,9 @@ public class RandomLolCatFragment extends Fragment
             //show loading spinner to indicate activity
             randomLolCatProgressBar.setVisibility(View.VISIBLE);
 
+            animateLolCatImageView(false);
+            animateLolCatTitle(false);
+
             nextDifferentRandomFlickrFeedIndex();
 
             currentFlickrFeedItem = flickrFeedItemList.get(randomlySelectedFlickrFeedItemIndex);
@@ -111,6 +117,22 @@ public class RandomLolCatFragment extends Fragment
             DownloadFlickrImageAsyncTask downloadFlickrImageAsyncTask = new DownloadFlickrImageAsyncTask(this, randomLolCatImageView);
             downloadFlickrImageAsyncTask.execute(currentFlickrFeedItem.getImageUrl());
         }
+    }
+
+    private void animateLolCatImageView(boolean animateIn) {
+        if (randomLolCatImageVisible != animateIn)
+        {
+            ObjectAnimator objectAnimator = (ObjectAnimator) AnimatorInflater.loadAnimator(
+                    getActivity(),
+                    animateIn ? R.animator.slide_image_in_from_top : R.animator.slide_image_down_out_to_bottom);
+            objectAnimator.setTarget(randomLolCatImageView);
+            objectAnimator.start();
+            randomLolCatTitleVisible = animateIn;
+        }
+    }
+
+    private void animateLolCatTitle(boolean animateIn) {
+
     }
 
     private void nextDifferentRandomFlickrFeedIndex() {
@@ -138,6 +160,7 @@ public class RandomLolCatFragment extends Fragment
     @Override
     public void onFlickrImageReceived(Bitmap flickrImageBitmap) {
         randomLolCatProgressBar.setVisibility(View.GONE);
+        animateLolCatImageView(true);
         lolcatTitleVisible(true);
     }
 
