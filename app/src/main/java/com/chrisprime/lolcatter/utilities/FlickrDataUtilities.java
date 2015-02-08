@@ -1,11 +1,18 @@
 package com.chrisprime.lolcatter.utilities;
 
+import android.content.Context;
+
 import com.chrisprime.lolcatter.netclasses.FlickrFeedItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,4 +65,43 @@ public class FlickrDataUtilities {
         jsonString = jsonString.substring(jsonString.indexOf("{"), jsonString.lastIndexOf("}") + 1);
         return jsonString;
     }
+
+    static public String readStringFromResource(Context context, int resourceID)
+    {
+        StringBuilder contents = new StringBuilder();
+        String sep = System.getProperty("line.separator");
+
+        try
+        {
+            InputStream is = context.getResources().openRawResource(resourceID);
+
+            BufferedReader input = new BufferedReader(new InputStreamReader(is), 1024 * 8);
+            try
+            {
+                String line = null;
+                while ((line = input.readLine()) != null)
+                {
+                    contents.append(line);
+                    contents.append(sep);
+                }
+            }
+            finally
+            {
+                input.close();
+            }
+        }
+        catch (FileNotFoundException ex)
+        {
+            Log.e(LOG_TAG, "Couldn't find the file");
+            return null;
+        }
+        catch (IOException ex)
+        {
+            Log.e(LOG_TAG, "Error reading file");
+            return null;
+        }
+
+        return contents.toString();
+    }
+
 }
