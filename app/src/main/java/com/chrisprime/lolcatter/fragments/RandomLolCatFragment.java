@@ -40,6 +40,8 @@ public class RandomLolCatFragment extends Fragment
     private FlickrFeedItem currentFlickrFeedItem;
     private int randomlySelectedFlickrFeedItemIndex;
 
+    private boolean randomLolCatTitleVisible = false;
+
     public RandomLolCatFragment() {
     }
 
@@ -52,15 +54,24 @@ public class RandomLolCatFragment extends Fragment
 
         randomLolCatImageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Log.d(LOG_TAG, ".onClick() for randomLolCatImageView");
                 updateRandomLolCat();
             }
         });
 
+        randomLolCatImageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Log.d(LOG_TAG, ".onLongClick() for randomLolCatImageView");
+                toggleTitleVisibility();
+                return true;
+            }
+        });
+
         randomLolCatTitleTextView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 Log.d(LOG_TAG, ".onClick() for randomLolCatTitleTextView");
                 if (currentFlickrFeedItem != null)
                 {
@@ -126,15 +137,15 @@ public class RandomLolCatFragment extends Fragment
     @Override
     public void onFlickrImageReceived(Bitmap flickrImageBitmap) {
         randomLolCatProgressBar.setVisibility(View.GONE);
-        showLolcatTitle();
+        lolcatTitleVisible(true);
     }
 
-    private void showLolcatTitle() {
-        randomLolCatTitleTextView.setVisibility(View.VISIBLE);
+    private void lolcatTitleVisible(boolean visible) {
+        randomLolCatTitleTextView.setVisibility(visible ? View.VISIBLE : View.GONE);
+        randomLolCatTitleVisible = visible;
     }
 
-    private void hideLolcatTitle() {
-        randomLolCatTitleTextView.setVisibility(View.GONE);
+    private void toggleTitleVisibility() {
+        lolcatTitleVisible(!randomLolCatTitleVisible);
     }
-
 }
