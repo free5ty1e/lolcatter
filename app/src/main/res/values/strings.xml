@@ -16,5 +16,6 @@
 
     <string name="pref_title_shake_detection_enabled">Shake Detection</string>
     <string name="pref_summary_shake_detection_enabled">Shaking the phone can also load a random lolcat, when enabled.</string>
+    <string name="content_description_lolcat_imageview">lolcats_here</string>
 
 </resources>

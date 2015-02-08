@@ -1,4 +1,4 @@
-package com.chrisprime.lolcatter.listeners;
+package com.chrisprime.lolcatter.interfaces;
 
 import android.graphics.Bitmap;
 
@@ -9,7 +9,13 @@ import java.util.List;
 /**
  * Created by cpaian on 2/7/15.
  */
-public interface OnFlickrDataReceivedListener {
+public interface RandomLolCatFragmentInterface {
+    public void refreshFlickrFeed();
+
+    public void updateRandomLolCat();
+
+    public boolean isLolcatImageAnimating();
+
     public void onFlickrFeedDataReceived(List<FlickrFeedItem> flickrFeedItemList);
 
     public void onFlickrImageReceived(Bitmap flickrImageBitmap);

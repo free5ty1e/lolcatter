@@ -4,9 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
-import android.widget.ImageView;
-
-import com.chrisprime.lolcatter.listeners.OnFlickrDataReceivedListener;
+import com.chrisprime.lolcatter.interfaces.RandomLolCatFragmentInterface;
 import com.chrisprime.lolcatter.utilities.Log;
 
 import java.io.IOException;
@@ -21,12 +19,10 @@ import java.io.InputStream;
 public class DownloadFlickrImageAsyncTask extends AsyncTask<String, Void, Bitmap> {
     private static final String LOG_TAG = DownloadFlickrImageAsyncTask.class.getSimpleName();
 
-    ImageView bmImage;
-    OnFlickrDataReceivedListener onFlickrDataReceivedListener;
+    RandomLolCatFragmentInterface randomLolCatFragmentInterface;
 
-    public DownloadFlickrImageAsyncTask(OnFlickrDataReceivedListener onFlickrDataReceivedListener, ImageView bmImage) {
-        this.bmImage = bmImage;
-        this.onFlickrDataReceivedListener = onFlickrDataReceivedListener;
+    public DownloadFlickrImageAsyncTask(RandomLolCatFragmentInterface randomLolCatFragmentInterface) {
+        this.randomLolCatFragmentInterface = randomLolCatFragmentInterface;
     }
 
     protected Bitmap doInBackground(String... urls) {
@@ -38,12 +34,12 @@ public class DownloadFlickrImageAsyncTask extends AsyncTask<String, Void, Bitmap
         } catch (IOException e) {
             Log.e(LOG_TAG, ".doInBackground(" + imageUrl + ") IOException: " + e.getMessage(), e);
         }
+        while (randomLolCatFragmentInterface.isLolcatImageAnimating()); //Wait until any current animation on the lolcat image is complete before proceeding; waiting is only OK on a background thread!
         return bitmap;
     }
 
     protected void onPostExecute(Bitmap flickrImageBitmap) {
         Log.suuv(LOG_TAG, ".onPostExecute(): flickrImageBitmap object was: " + flickrImageBitmap);
-        bmImage.setImageBitmap(flickrImageBitmap);
-        onFlickrDataReceivedListener.onFlickrImageReceived(flickrImageBitmap);
+        randomLolCatFragmentInterface.onFlickrImageReceived(flickrImageBitmap);
     }
 }

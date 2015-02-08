@@ -8,10 +8,11 @@
     android:paddingTop="@dimen/fragment_random_lolcat_vertical_margin"
     tools:context="com.chrisprime.lolcatter.fragments.RandomLolCatFragment" >
 
-    <ImageView
+    <com.chrisprime.lolcatter.customcontrols.FractionallyAnimatableImageView
         android:id="@+id/random_lolcat_imageview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="@string/content_description_lolcat_imageview"
         android:scaleType="fitCenter" />
 
     <ProgressBar

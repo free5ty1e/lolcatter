@@ -1,5 +1,8 @@
 package com.chrisprime.lolcatter.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.ObjectAnimator;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,8 +18,7 @@ import android.widget.TextView;
 import com.chrisprime.lolcatter.R;
 import com.chrisprime.lolcatter.async.DownloadFlickrFeedAsyncTask;
 import com.chrisprime.lolcatter.async.DownloadFlickrImageAsyncTask;
-import com.chrisprime.lolcatter.listeners.OnFlickrDataReceivedListener;
-import com.chrisprime.lolcatter.listeners.RandomLolCatFragmentUpdateInterface;
+import com.chrisprime.lolcatter.interfaces.RandomLolCatFragmentInterface;
 import com.chrisprime.lolcatter.netclasses.FlickrFeedItem;
 import com.chrisprime.lolcatter.utilities.Log;
 import com.chrisprime.lolcatter.utilities.PreferenceUtilities;
@@ -28,8 +30,7 @@ import java.util.List;
  * Created by cpaian on 2/7/15.
  */
 public class RandomLolCatFragment extends Fragment
-        implements OnFlickrDataReceivedListener,
-        RandomLolCatFragmentUpdateInterface {
+        implements RandomLolCatFragmentInterface {
     private static final String LOG_TAG = RandomLolCatFragment.class.getSimpleName();
 
     private ImageView randomLolCatImageView;
@@ -41,6 +42,10 @@ public class RandomLolCatFragment extends Fragment
     private int randomlySelectedFlickrFeedItemIndex;
 
     private boolean randomLolCatTitleVisible = false;
+    private boolean randomLolCatImageVisible = false;
+    private boolean lolcatImageAnimating = false;
+
+    private boolean userSetTitleVisibility = true;
 
     public RandomLolCatFragment() {
     }
@@ -99,6 +104,8 @@ public class RandomLolCatFragment extends Fragment
             //show loading spinner to indicate activity
             randomLolCatProgressBar.setVisibility(View.VISIBLE);
 
+            animateLolCatImageView(false);
+
             nextDifferentRandomFlickrFeedIndex();
 
             currentFlickrFeedItem = flickrFeedItemList.get(randomlySelectedFlickrFeedItemIndex);
@@ -108,8 +115,44 @@ public class RandomLolCatFragment extends Fragment
                     + "/" + flickrFeedItemList.size() + "): " + currentFlickrFeedItem.getTitle());
 
             //Start background download of image
-            DownloadFlickrImageAsyncTask downloadFlickrImageAsyncTask = new DownloadFlickrImageAsyncTask(this, randomLolCatImageView);
+            DownloadFlickrImageAsyncTask downloadFlickrImageAsyncTask = new DownloadFlickrImageAsyncTask(this);
             downloadFlickrImageAsyncTask.execute(currentFlickrFeedItem.getImageUrl());
+        }
+    }
+
+    private void animateLolCatImageView(boolean animateIn) {
+        Log.suuv(LOG_TAG, ".animateLolCatImageView(" + animateIn + "), randomLolCatImageVisible = " + randomLolCatImageVisible);
+        if (randomLolCatImageVisible != animateIn)
+        {
+            Log.suuv(LOG_TAG, ".animateLolCatImageView() states different, animating!");
+            ObjectAnimator objectAnimator = (ObjectAnimator) AnimatorInflater.loadAnimator(
+                    getActivity(),
+                    animateIn ? R.animator.slide_image_in_from_top : R.animator.slide_image_down_out_to_bottom);
+            objectAnimator.setTarget(randomLolCatImageView);
+            lolcatImageAnimating = true;
+            objectAnimator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    lolcatImageAnimating = false;
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
+            objectAnimator.start();
+            randomLolCatImageVisible = animateIn;
         }
     }
 
@@ -137,8 +180,10 @@ public class RandomLolCatFragment extends Fragment
 
     @Override
     public void onFlickrImageReceived(Bitmap flickrImageBitmap) {
+        randomLolCatImageView.setImageBitmap(flickrImageBitmap);
         randomLolCatProgressBar.setVisibility(View.GONE);
-        lolcatTitleVisible(true);
+        animateLolCatImageView(true);
+        lolcatTitleVisible(userSetTitleVisibility);
     }
 
     private void lolcatTitleVisible(boolean visible) {
@@ -147,6 +192,12 @@ public class RandomLolCatFragment extends Fragment
     }
 
     private void toggleTitleVisibility() {
+        userSetTitleVisibility = !userSetTitleVisibility;
         lolcatTitleVisible(!randomLolCatTitleVisible);
+    }
+
+    @Override
+    public boolean isLolcatImageAnimating() {
+        return lolcatImageAnimating;
     }
 }
