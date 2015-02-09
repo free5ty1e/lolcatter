@@ -8,8 +8,22 @@ LOLCatter: A useless, fun Android app (API 16 / v4.1 / JellyBean required) creat
 ### Download prebuilt APK
 https://www.dropbox.com/s/k4hch8z5g0vwsfj/lolcatter-debug.apk.zip?dl=0
 
+### Given app requirements
+Here is the list of requirements I was given for this tech challenge.  This project is what I ended up with.
+* Given that I am a user that has an Android phone or tablet. 
+* When I touch the screen in the area that looks like a rectangle or picture frame. 
+* Then the rectangle or picture frame loads with an image of a random LoLcat loaded from Flickr.
+ 
+* Button / touch area on screen can be a simple rectangle (minimum 200x400)
+* Asynchronous loading of the image over the network
+* Provides user with loading status indicator
+* Supports rotation
+* Loads LoLcats from Flickr
+* This application is meant to demonstrate a familiarity with core design patterns for both Android and Java. Due to this goal, the application should be written without the use of external libraries. (this is why I am not using Robolectric for the unit testing, by the way, which is the only external dependency I'd like to add)
+
+
 ### Basic usage:
-* Upon loading, the app will grab some of the most recent Flickr posts tagged "lolcat" and display one randomly with a title.
+* Upon loading, the app will grab some (20) of the most recent Flickr posts tagged "lolcat" and display one randomly with a title.
  
 * Tapping on the image will load another random lolcat from the current Flickr feed in memory.
 
@@ -34,5 +48,6 @@ https://www.dropbox.com/s/k4hch8z5g0vwsfj/lolcatter-debug.apk.zip?dl=0
 
 ### TO DO:
 * Swipe gestures up and down will actually navigate to next and previous lolcat items in the feed (NOT random, in order)
-
+* Add user setting to control shake detection settling timeout (750ms default)
+* Look into other Flickr REST API calls that could potentially result in a more diverse, larger pool for the random lolcat (currently we retrieve a feed of the most recent 20 lolcat-tagged Flickr posts)
 
