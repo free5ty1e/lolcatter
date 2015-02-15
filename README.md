@@ -50,4 +50,5 @@ Here is the list of requirements I was given for this tech challenge.  This proj
 * Swipe gestures up and down will actually navigate to next and previous lolcat items in the feed (NOT random, in order)
 * Add user setting to control shake detection settling timeout (750ms default)
 * Look into other Flickr REST API calls that could potentially result in a more diverse, larger pool for the random lolcat (currently we retrieve a feed of the most recent 20 lolcat-tagged Flickr posts)
+* Support direct launching of the Flickr app (if installed), or provide link to Play Store to download Flickr app so that tapping post title can also open post in Flickr app directly (demonstrates content URI usage)
 
